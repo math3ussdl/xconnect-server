@@ -1,7 +1,8 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { UserService } from '../user/user.service';
-import { User } from '../../app/models/user.entity';
+import { IUserLogin, User } from '../../app/models/user.entity';
+import * as bcrypt from 'bcryptjs';
 
 @Injectable()
 export class AuthService {
@@ -10,14 +11,23 @@ export class AuthService {
     private readonly jwtService: JwtService,
   ) {}
 
-  private async validate(userData: User): Promise<User> {
-    return await this.userService.readByEmail(userData.email);
+  private async validate(user: IUserLogin): Promise<User> {
+    return await this.userService.readByEmail(user.email);
   }
 
-  public async login(user: User): Promise<any | { status: number }> {
-    return this.validate(user).then(userData => {
+  public async login(user: IUserLogin): Promise<any | { status: number }> {
+    return this.validate(user).then(async userData => {
       if (!userData) {
         return { status: 404 };
+      }
+
+      const passwordsMatching = await bcrypt.compare(
+        user.password,
+        userData.password,
+      );
+
+      if (!passwordsMatching) {
+        throw new BadRequestException('Passwords not Matching!');
       }
 
       let payload = `${userData.name}${userData.id}`;

@@ -15,9 +15,11 @@ import { AuthModule } from './auth/auth.module';
       username: 'postgres',
       password: 'Postgres2020!',
       database: 'xconn3ct',
-      entities: [__dirname + '/**/*.entity{.ts,.js}'],
+      entities: [__dirname + '/app/models/**/*.entity{.ts,.js}'],
+      subscribers: [__dirname + '/database/subscribers/*.subscriber{.ts,.js}'],
       cli: {
-        entitiesDir: __dirname + '/models',
+        entitiesDir: __dirname + '/app/models',
+        subscribersDir: __dirname + '/database/subscribers',
       },
       synchronize: true,
     }),

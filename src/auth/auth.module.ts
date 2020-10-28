@@ -11,7 +11,7 @@ import { AuthController } from './auth/auth.controller';
   imports: [
     TypeOrmModule.forFeature([User]),
     JwtModule.register({
-      secretOrPrivateKey: '@MEGAWATT13',
+      secret: '@MEGAWATT13',
     }),
   ],
   controllers: [AuthController],

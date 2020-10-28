@@ -7,7 +7,7 @@ import { User, IUserUpdate } from '../../app/models/user.entity';
 export class UserService {
   constructor(
     @InjectRepository(User)
-    private userRepository: Repository<User>
+    private userRepository: Repository<User>,
   ) {}
 
   async create(user: User): Promise<User> {
@@ -33,7 +33,7 @@ export class UserService {
   async update(id: string, user: IUserUpdate): Promise<User> {
     await this.userRepository.update(id, user);
     return await this.userRepository.findOne({
-      where: { id }
+      where: { id },
     });
   }
 

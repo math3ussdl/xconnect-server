@@ -11,9 +11,7 @@ export class AuthController {
   ) {}
 
   @Post('login')
-  async login(@Body() userData: IUserLogin): Promise<any> {
-    const user = await this.userService.readByEmail(userData.email);
-
+  async login(@Body() user: IUserLogin): Promise<any> {
     return this.authService.login(user);
   }
 

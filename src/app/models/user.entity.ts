@@ -1,5 +1,4 @@
 import { Entity, Column, PrimaryGeneratedColumn, BeforeInsert } from 'typeorm';
-import bc from 'bcryptjs';
 
 @Entity('users')
 export class User {
@@ -24,10 +23,6 @@ export class User {
   @Column({ type: 'varchar', length: 50, unique: true })
   email: string;
 
-  @BeforeInsert()
-  hashPassword() {
-    this.password = bc.hashSync(this.password, 12);
-  }
   @Column()
   password: string;
 
