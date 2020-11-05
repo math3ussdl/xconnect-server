@@ -6,6 +6,7 @@ import { User } from '../app/models/user.entity';
 import { UserService } from './user/user.service';
 import { AuthService } from './auth/auth.service';
 import { AuthController } from './auth/auth.controller';
+import { UserController } from './user/user.controller';
 
 @Module({
   imports: [
@@ -14,7 +15,7 @@ import { AuthController } from './auth/auth.controller';
       secret: '@MEGAWATT13',
     }),
   ],
-  controllers: [AuthController],
+  controllers: [AuthController, UserController],
   providers: [UserService, AuthService],
 })
 export class AuthModule {}

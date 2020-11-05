@@ -28,3 +28,14 @@ export class Donation {
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   updated_at: string;
 }
+
+export interface IDonationDTO {
+  products: Product[];
+  receiverEmail: string;
+}
+
+export interface IDonationUpdated {
+  donor?: User;
+  receiver?: User;
+  products?: Product[];
+}

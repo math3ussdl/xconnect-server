@@ -5,12 +5,14 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 
 import { AuthModule } from './auth/auth.module';
+import { DonationModule } from './donation/donation.module';
+import { SellModule } from './sell/sell.module';
 
 @Module({
   imports: [
     TypeOrmModule.forRoot({
       type: 'postgres',
-      host: '172.25.0.2',
+      host: 'localhost',
       port: 5432,
       username: 'postgres',
       password: 'Postgres2020!',
@@ -24,6 +26,8 @@ import { AuthModule } from './auth/auth.module';
       synchronize: true,
     }),
     AuthModule,
+    DonationModule,
+    SellModule,
   ],
   controllers: [AppController],
   providers: [AppService],

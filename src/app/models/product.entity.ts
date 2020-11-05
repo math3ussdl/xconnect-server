@@ -1,5 +1,6 @@
 import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, JoinTable } from 'typeorm';
 import { Donation } from './donation.entity';
+import { Sell } from './sell.entity';
 
 @Entity('products')
 export class Product {
@@ -19,5 +20,11 @@ export class Product {
     cascade: true
   })
   @JoinTable()
-  donation: Donation;
+  donation?: Donation;
+
+  @ManyToOne(type => Sell, sell => sell.products, {
+    cascade: true
+  })
+  @JoinTable()
+  sell?: Sell;
 }

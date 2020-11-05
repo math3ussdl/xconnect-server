@@ -1,4 +1,5 @@
-import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, JoinTable } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, JoinTable, OneToMany } from 'typeorm';
+import { Product } from './product.entity';
 import { User } from './user.entity';
 
 @Entity('sells')
@@ -18,9 +19,17 @@ export class Sell {
   @JoinTable()
   seller: User;
 
+  @OneToMany(() => Product, product => product.sell)
+  products: Product[];
+
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   created_at: string;
 
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   updated_at: string;
+}
+
+export interface ISellDTO {
+  products: Product[];
+  sellerEmail: string;
 }
