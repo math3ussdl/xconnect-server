@@ -21,14 +21,21 @@ export class DonationService {
         leftJoinAndSelect: {
           donor: 'donation.donor',
           receiver: 'donation.receiver',
-          products: 'donation.products'
+          products: 'donation.products',
         },
       },
     });
   }
 
   async readOne(id: string): Promise<Donation> {
-    return await this.donationRepository.findOne(id);
+    return await this.donationRepository.findOne(id, {
+      join: {
+        alias: 'donation',
+        leftJoinAndSelect: {
+          products: 'donation.products',
+        },
+      },
+    });
   }
 
   async update(id: string, newVal: IDonationUpdated): Promise<Donation> {

@@ -1,4 +1,11 @@
-import { Entity, Column, PrimaryGeneratedColumn, OneToMany, ManyToOne, JoinTable } from 'typeorm';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  OneToMany,
+  ManyToOne,
+  JoinTable,
+} from 'typeorm';
 import { User } from './user.entity';
 import { Product } from './product.entity';
 
@@ -7,19 +14,31 @@ export class Donation {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @ManyToOne(type => User, user => user.donations, {
-    cascade: true
-  })
+  @ManyToOne(
+    type => User,
+    user => user.donations,
+    {
+      cascade: true,
+    },
+  )
   @JoinTable()
   donor: User;
 
-  @ManyToOne(type => User, user => user.receipts, {
-    cascade: true
-  })
+  @ManyToOne(
+    type => User,
+    user => user.receipts,
+    {
+      cascade: true,
+    },
+  )
   @JoinTable()
   receiver: User;
 
-  @OneToMany(() => Product, product => product.donation)
+  @OneToMany(
+    () => Product,
+    product => product.donation,
+    { cascade: ['insert', 'update', 'remove'], onDelete: 'CASCADE', onUpdate: 'CASCADE' },
+  )
   products: Product[];
 
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })

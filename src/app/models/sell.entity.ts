@@ -1,4 +1,11 @@
-import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, JoinTable, OneToMany } from 'typeorm';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  ManyToOne,
+  JoinTable,
+  OneToMany,
+} from 'typeorm';
 import { Product } from './product.entity';
 import { User } from './user.entity';
 
@@ -7,19 +14,31 @@ export class Sell {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @ManyToOne(type => User, user => user.purchases, {
-    cascade: true
-  })
+  @ManyToOne(
+    type => User,
+    user => user.purchases,
+    {
+      cascade: true,
+    },
+  )
   @JoinTable()
   buyer: User;
 
-  @ManyToOne(type => User, user => user.sales, {
-    cascade: true
-  })
+  @ManyToOne(
+    type => User,
+    user => user.sales,
+    {
+      cascade: true,
+    },
+  )
   @JoinTable()
   seller: User;
 
-  @OneToMany(() => Product, product => product.sell)
+  @OneToMany(
+    () => Product,
+    product => product.sell,
+    { cascade: true, onUpdate: 'CASCADE', onDelete: 'CASCADE' },
+  )
   products: Product[];
 
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
@@ -32,4 +51,10 @@ export class Sell {
 export interface ISellDTO {
   products: Product[];
   sellerEmail: string;
+}
+
+export interface ISellUpdated {
+  buyer?: User;
+  seller?: User;
+  products?: Product[];
 }

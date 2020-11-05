@@ -1,4 +1,10 @@
-import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, JoinTable } from 'typeorm';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  ManyToOne,
+  JoinTable,
+} from 'typeorm';
 import { Donation } from './donation.entity';
 import { Sell } from './sell.entity';
 
@@ -7,7 +13,7 @@ export class Product {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column({ type: 'varchar', length: 80, unique: true })
+  @Column({ type: 'varchar', length: 80 })
   description: string;
 
   @Column({ type: 'int' })
@@ -16,15 +22,19 @@ export class Product {
   @Column({ type: 'varchar', length: 50, enum: ['Novo', 'Seminovo', 'Usado'] })
   state: string;
 
-  @ManyToOne(type => Donation, donation => donation.products, {
-    cascade: true
-  })
+  @ManyToOne(
+    type => Donation,
+    donation => donation.products,
+    { onDelete: 'CASCADE', onUpdate: 'CASCADE' }
+  )
   @JoinTable()
   donation?: Donation;
 
-  @ManyToOne(type => Sell, sell => sell.products, {
-    cascade: true
-  })
+  @ManyToOne(
+    type => Sell,
+    sell => sell.products,
+    { onDelete: 'CASCADE', onUpdate: 'CASCADE' }
+  )
   @JoinTable()
   sell?: Sell;
 }

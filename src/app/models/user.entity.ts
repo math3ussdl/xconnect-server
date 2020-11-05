@@ -37,16 +37,28 @@ export class User {
   @Column({ type: 'varchar', length: 4, enum: ['DPF', 'DPJ', 'ONG', 'BUSR'] })
   role: string;
 
-  @OneToMany(() => Donation, donation => donation.donor)
+  @OneToMany(
+    () => Donation,
+    donation => donation.donor,
+  )
   donations?: Donation[];
 
-  @OneToMany(() => Donation, donation => donation.receiver)
+  @OneToMany(
+    () => Donation,
+    donation => donation.receiver,
+  )
   receipts?: Donation[];
 
-  @OneToMany(() => Sell, sell => sell.buyer)
+  @OneToMany(
+    () => Sell,
+    sell => sell.buyer,
+  )
   purchases?: Sell[];
 
-  @OneToMany(() => Sell, sell => sell.seller)
+  @OneToMany(
+    () => Sell,
+    sell => sell.seller,
+  )
   sales?: Sell[];
 }
 
