@@ -3,12 +3,11 @@ import { DonationService } from './donation.service';
 import { DonationController } from './donation.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Donation } from 'src/app/models/donation.entity';
-import { UserService } from 'src/auth/user/user.service';
+import { UserService } from 'src/modules/auth/user/user.service';
 import { User } from 'src/app/models/user.entity';
-import { ProductModule } from 'src/product/product.module';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Donation, User]), ProductModule],
+  imports: [TypeOrmModule.forFeature([Donation, User])],
   providers: [DonationService, UserService],
   controllers: [DonationController],
 })

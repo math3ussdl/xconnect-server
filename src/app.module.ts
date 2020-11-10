@@ -4,9 +4,10 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 
-import { AuthModule } from './auth/auth.module';
-import { DonationModule } from './donation/donation.module';
-import { SellModule } from './sell/sell.module';
+import { AuthModule } from './modules/auth/auth.module';
+import { DonationModule } from './modules/donation/donation.module';
+import { SellModule } from './modules/sell/sell.module';
+import { EmailModule } from './modules/email/email.module';
 
 @Module({
   imports: [
@@ -28,6 +29,7 @@ import { SellModule } from './sell/sell.module';
     AuthModule,
     DonationModule,
     SellModule,
+    EmailModule,
   ],
   controllers: [AppController],
   providers: [AppService],
