@@ -41,6 +41,9 @@ export class Donation {
   )
   products: Product[];
 
+  @Column({ type: 'varchar', length: 50, enum: ['Iniciada', 'Pendente', 'Concluida'], default: 'Iniciada' })
+  status: string;
+
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   created_at: string;
 
@@ -57,4 +60,5 @@ export interface IDonationUpdated {
   donor?: User;
   receiver?: User;
   products?: Product[];
+  status?: string;
 }

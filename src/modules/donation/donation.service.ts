@@ -46,4 +46,22 @@ export class DonationService {
   async delete(id: string): Promise<DeleteResult> {
     return await this.donationRepository.delete(id);
   }
+
+  async accept(id: string): Promise<Donation> {
+    const targetDonation = await this.readOne(id);
+
+    return await this.update(id, {
+      ...targetDonation,
+      status: 'Pendente',
+    });
+  }
+
+  async complete(id: string): Promise<Donation> {
+    const targetDonation = await this.readOne(id);
+
+    return await this.update(id, {
+      ...targetDonation,
+      status: 'Concluida',
+    });
+  }
 }

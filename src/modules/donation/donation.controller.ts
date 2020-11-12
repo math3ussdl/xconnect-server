@@ -1,4 +1,5 @@
 import { BadRequestException, Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
+import { MailService } from '@sendgrid/mail';
 import { Donation, IDonationDTO, IDonationUpdated } from 'src/app/models/donation.entity';
 import { Product } from 'src/app/models/product.entity';
 import { UserService } from 'src/modules/auth/user/user.service';
@@ -9,6 +10,7 @@ export class DonationController {
   constructor(
     private readonly donationService: DonationService,
     private readonly userService: UserService,
+    private readonly mailService: MailService,
   ) {}
 
   @Get()
@@ -34,7 +36,22 @@ export class DonationController {
     donation.products = bodyDonation.products;
     donation.receiver = receiver;
 
-    return await this.donationService.create(donation);
+    const donationCreated = await this.donationService.create(donation);
+
+    await this.mailService.send({
+      to: donationCreated.donor.email,
+      from: 'limabrot879@gmail.com',
+      subject: 'Parabéns! Sua Doação foi feita com sucesso!',
+      html: `
+        <strong>
+          Acompanhe pelo sistema o status de sua doação! <br />
+          <em>Código</em>: ${donationCreated.id} <br />
+          <em>Status</em>: ${donationCreated.status} <br />
+        </strong>
+      `,
+    });
+
+    return donationCreated;
   }
 
   // @Put(':id')

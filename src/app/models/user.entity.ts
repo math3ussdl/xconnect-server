@@ -13,10 +13,10 @@ export class User {
   @Column({ type: 'varchar', length: 50, nullable: true })
   lastName?: string;
 
-  @Column({ type: 'char', length: 11, nullable: true })
+  @Column({ type: 'char', length: 11, nullable: true, unique: true })
   cpf?: string;
 
-  @Column({ type: 'char', length: 14, nullable: true })
+  @Column({ type: 'char', length: 14, nullable: true, unique: true })
   cnpj?: string;
 
   @Column({ type: 'varchar', length: 40 })

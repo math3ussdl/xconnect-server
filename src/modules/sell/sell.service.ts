@@ -30,4 +30,22 @@ export class SellService {
   async delete(id: string): Promise<DeleteResult> {
     return await this.sellRepository.delete(id);
   }
+
+  async accept(id: string): Promise<Sell> {
+    const targetSell = await this.readOne(id);
+
+    return await this.update(id, {
+      ...targetSell,
+      status: 'Pendente',
+    });
+  }
+
+  async complete(id: string): Promise<Sell> {
+    const targetSell = await this.readOne(id);
+
+    return await this.update(id, {
+      ...targetSell,
+      status: 'Concluida',
+    });
+  }
 }

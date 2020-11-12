@@ -1,4 +1,5 @@
 import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
+import { MailService } from '@sendgrid/mail';
 import { Product } from 'src/app/models/product.entity';
 import { ISellDTO, ISellUpdated, Sell } from 'src/app/models/sell.entity';
 import { UserService } from 'src/modules/auth/user/user.service';
@@ -9,6 +10,7 @@ export class SellController {
   constructor(
     private readonly sellService: SellService,
     private readonly userService: UserService,
+    private readonly mailService: MailService,
   ) {}
 
   @Get()
@@ -34,7 +36,23 @@ export class SellController {
     sell.products = bodySell.products;
     sell.seller = seller;
 
-    return await this.sellService.create(sell);
+    const sellCreated = await this.sellService.create(sell);
+
+    await this.mailService.send({
+      to: sellCreated.buyer.email,
+      from: 'limabrot879@gmail.com',
+      subject: 'Parabéns!',
+      text: 'Sua Compra foi feita com sucesso!',
+      html: `
+        <strong>
+          Acompanhe pelo sistema o status do seu pedido! <br />
+          <em>Código</em>: ${sellCreated.id} <br />
+          <em>Status</em>: ${sellCreated.status} <br />
+        </strong>
+      `,
+    });
+
+    return sellCreated;
   }
 
   // @Put(':id')
