@@ -10,9 +10,6 @@ export class User {
   @Column({ type: 'varchar', length: 50 })
   name: string;
 
-  @Column({ type: 'varchar', length: 50, nullable: true })
-  lastName?: string;
-
   @Column({ type: 'char', length: 11, nullable: true, unique: true })
   cpf?: string;
 
@@ -64,7 +61,6 @@ export class User {
 
 export interface IUserUpdate {
   name?: string;
-  lastName?: string;
   cpf?: string;
   cnpj?: string;
   address?: string;
