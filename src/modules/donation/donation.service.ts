@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Donation, IDonationUpdated } from 'src/app/models/donation.entity';
+import { User } from 'src/app/models/user.entity';
 import { DeleteResult, Repository } from 'typeorm';
 
 @Injectable()
@@ -20,7 +21,19 @@ export class DonationService {
         alias: 'donation',
         leftJoinAndSelect: {
           donor: 'donation.donor',
-          receiver: 'donation.receiver',
+          products: 'donation.products',
+        },
+      },
+    });
+  }
+
+  async readByDonor(user: User): Promise<Donation[]> {
+    return await this.donationRepository.find({
+      where: { donor: user },
+      join: {
+        alias: 'donation',
+        leftJoinAndSelect: {
+          donor: 'donation.donor',
           products: 'donation.products',
         },
       },
@@ -52,7 +65,7 @@ export class DonationService {
 
     return await this.update(id, {
       ...targetDonation,
-      status: 'Pendente',
+      status: 'Em Andamento',
     });
   }
 
@@ -61,7 +74,7 @@ export class DonationService {
 
     return await this.update(id, {
       ...targetDonation,
-      status: 'Concluida',
+      status: 'Entregue',
     });
   }
 }

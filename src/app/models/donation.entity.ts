@@ -24,16 +24,6 @@ export class Donation {
   @JoinTable()
   donor: User;
 
-  @ManyToOne(
-    type => User,
-    user => user.receipts,
-    {
-      cascade: true,
-    },
-  )
-  @JoinTable()
-  receiver: User;
-
   @OneToMany(
     () => Product,
     product => product.donation,
@@ -41,7 +31,7 @@ export class Donation {
   )
   products: Product[];
 
-  @Column({ type: 'varchar', length: 50, enum: ['Iniciada', 'Pendente', 'Concluida'], default: 'Iniciada' })
+  @Column({ type: 'varchar', length: 50, enum: ['Realizada', 'Em Andamento', 'Entregue'], default: 'Realizada' })
   status: string;
 
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
@@ -53,12 +43,9 @@ export class Donation {
 
 export interface IDonationDTO {
   products: Product[];
-  receiverEmail: string;
 }
 
 export interface IDonationUpdated {
-  donor?: User;
-  receiver?: User;
   products?: Product[];
   status?: string;
 }

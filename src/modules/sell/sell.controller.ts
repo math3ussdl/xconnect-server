@@ -1,7 +1,6 @@
-import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
 import { MailService } from '@sendgrid/mail';
-import { Product } from 'src/app/models/product.entity';
-import { ISellDTO, ISellUpdated, Sell } from 'src/app/models/sell.entity';
+import { ISellDTO, Sell } from 'src/app/models/sell.entity';
 import { UserService } from 'src/modules/auth/user/user.service';
 import { SellService } from './sell.service';
 
@@ -29,12 +28,10 @@ export class SellController {
     @Body() bodySell: ISellDTO,
   ): Promise<any> {
     const targetBuyerUser = await this.userService.readById(params.id);
-    const seller = await this.userService.readByEmail(bodySell.sellerEmail);
 
     const sell = new Sell();
     sell.buyer = targetBuyerUser;
     sell.products = bodySell.products;
-    sell.seller = seller;
 
     const sellCreated = await this.sellService.create(sell);
 
@@ -55,13 +52,13 @@ export class SellController {
     return sellCreated;
   }
 
-  // @Put(':id')
-  // async update(
-  //   @Param() params: { id: string },
-  //   @Body() sell: ISellUpdated,
-  // ): Promise<any> {
-  //   return await this.sellService.update(params.id, sell);
-  // }
+  @Put(':id')
+  async update(
+    @Param() params: { id: string },
+    @Body() sell: Sell,
+  ): Promise<any> {
+    return await this.sellService.update(params.id, sell);
+  }
 
   @Delete(':id')
   async delete(

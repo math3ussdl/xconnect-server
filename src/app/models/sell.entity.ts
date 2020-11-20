@@ -24,16 +24,6 @@ export class Sell {
   @JoinTable()
   buyer: User;
 
-  @ManyToOne(
-    type => User,
-    user => user.sales,
-    {
-      cascade: true,
-    },
-  )
-  @JoinTable()
-  seller: User;
-
   @OneToMany(
     () => Product,
     product => product.sell,
@@ -41,7 +31,7 @@ export class Sell {
   )
   products: Product[];
 
-  @Column({ type: 'varchar', length: 50, enum: ['Iniciada', 'Pendente', 'Concluida'], default: 'Iniciada' })
+  @Column({ type: 'varchar', length: 50, enum: ['Realizada', 'Em Andamento', 'Entregue'], default: 'Realizada' })
   status: string;
 
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
@@ -53,11 +43,4 @@ export class Sell {
 
 export interface ISellDTO {
   products: Product[];
-  sellerEmail: string;
-}
-
-export interface ISellUpdated {
-  buyer?: User;
-  seller?: User;
-  products?: Product[];
 }
