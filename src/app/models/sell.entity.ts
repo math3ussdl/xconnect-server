@@ -24,6 +24,16 @@ export class Sell {
   @JoinTable()
   buyer: User;
 
+  @ManyToOne(
+    type => User,
+    user => user.sells,
+    {
+      cascade: true,
+    },
+  )
+  @JoinTable()
+  seller: User;
+
   @OneToMany(
     () => Product,
     product => product.sell,

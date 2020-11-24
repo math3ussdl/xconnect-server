@@ -22,7 +22,17 @@ export class Donation {
     },
   )
   @JoinTable()
-  donor: User;
+  donor?: User;
+
+  @ManyToOne(
+    type => User,
+    user => user.receipts,
+    {
+      cascade: true,
+    },
+  )
+  @JoinTable()
+  receipt?: User;
 
   @OneToMany(
     () => Product,
@@ -47,5 +57,7 @@ export interface IDonationDTO {
 
 export interface IDonationUpdated {
   products?: Product[];
+  donor?: User;
+  receipt?: User;
   status?: string;
 }

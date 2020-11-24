@@ -41,10 +41,22 @@ export class User {
   donations?: Donation[];
 
   @OneToMany(
+    () => Donation,
+    donation => donation.receipt,
+  )
+  receipts?: Donation[];
+
+  @OneToMany(
     () => Sell,
     sell => sell.buyer,
   )
   purchases?: Sell[];
+
+  @OneToMany(
+    () => Sell,
+    sell => sell.seller,
+  )
+  sells?: Sell[];
 }
 
 export interface IUserUpdate {

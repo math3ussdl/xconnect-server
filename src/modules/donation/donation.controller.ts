@@ -6,6 +6,7 @@ import {
   Param,
   Post,
   Put,
+  Req,
 } from '@nestjs/common';
 import { MailService } from '@sendgrid/mail';
 import {
@@ -81,5 +82,21 @@ export class DonationController {
   @Delete(':id')
   async delete(@Param() params: { id: string }): Promise<any> {
     return await this.donationService.delete(params.id);
+  }
+
+  @Put(':acceptId')
+  async accept(
+    @Req() req: Request,
+    @Param() params: { acceptId: string },
+  ): Promise<any> {
+    return await this.donationService.accept(
+      req.headers['id'],
+      params.acceptId,
+    );
+  }
+
+  @Put(':id')
+  async complete(@Param() params: { id: string }): Promise<any> {
+    return await this.donationService.complete(params.id);
   }
 }

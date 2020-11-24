@@ -1,4 +1,13 @@
-import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Post,
+  Put,
+  Req,
+} from '@nestjs/common';
 import { MailService } from '@sendgrid/mail';
 import { ISellDTO, Sell } from 'src/app/models/sell.entity';
 import { UserService } from 'src/modules/auth/user/user.service';
@@ -61,9 +70,23 @@ export class SellController {
   }
 
   @Delete(':id')
-  async delete(
-    @Param() params: { id: string }
-  ): Promise<any> {
+  async delete(@Param() params: { id: string }): Promise<any> {
     return await this.sellService.delete(params.id);
+  }
+
+  @Put(':acceptId')
+  async accept(
+    @Req() req: Request,
+    @Param() params: { acceptId: string },
+  ): Promise<any> {
+    return await this.sellService.accept(
+      req.headers['id'],
+      params.acceptId,
+    );
+  }
+
+  @Put(':id')
+  async complete(@Param() params: { id: string }): Promise<any> {
+    return await this.sellService.complete(params.id);
   }
 }

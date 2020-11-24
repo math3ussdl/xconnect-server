@@ -3,12 +3,14 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Donation, IDonationUpdated } from 'src/app/models/donation.entity';
 import { User } from 'src/app/models/user.entity';
 import { DeleteResult, Repository } from 'typeorm';
+import { UserService } from '../auth/user/user.service';
 
 @Injectable()
 export class DonationService {
   constructor(
     @InjectRepository(Donation)
     private donationRepository: Repository<Donation>,
+    private readonly userService: UserService,
   ) {}
 
   async create(donation: Donation): Promise<Donation> {
@@ -60,11 +62,13 @@ export class DonationService {
     return await this.donationRepository.delete(id);
   }
 
-  async accept(id: string): Promise<Donation> {
+  async accept(id: string, userAcceptedId: string): Promise<Donation> {
     const targetDonation = await this.readOne(id);
+    const acceptUser = await this.userService.readById(userAcceptedId);
 
     return await this.update(id, {
       ...targetDonation,
+      receipt: acceptUser,
       status: 'Em Andamento',
     });
   }
@@ -74,6 +78,7 @@ export class DonationService {
 
     return await this.update(id, {
       ...targetDonation,
+      donor: null,
       status: 'Entregue',
     });
   }

@@ -8,6 +8,7 @@ import { AuthModule } from './modules/auth/auth.module';
 import { DonationModule } from './modules/donation/donation.module';
 import { SellModule } from './modules/sell/sell.module';
 import { EmailModule } from './modules/email/email.module';
+import { ProductModule } from './modules/product/product.module';
 
 @Module({
   imports: [
@@ -30,6 +31,7 @@ import { EmailModule } from './modules/email/email.module';
     DonationModule,
     SellModule,
     EmailModule,
+    ProductModule,
   ],
   controllers: [AppController],
   providers: [AppService],
