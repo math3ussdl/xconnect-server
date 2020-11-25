@@ -23,6 +23,7 @@ export class DonationService {
         alias: 'donation',
         leftJoinAndSelect: {
           donor: 'donation.donor',
+          receipt: 'donation.receipt',
           products: 'donation.products',
         },
       },

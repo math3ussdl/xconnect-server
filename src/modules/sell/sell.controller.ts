@@ -6,6 +6,7 @@ import {
   Param,
   Post,
   Put,
+  Query,
   Req,
 } from '@nestjs/common';
 import { MailService } from '@sendgrid/mail';
@@ -76,13 +77,10 @@ export class SellController {
 
   @Put(':acceptId')
   async accept(
-    @Req() req: Request,
+    @Query('id') id,
     @Param() params: { acceptId: string },
   ): Promise<any> {
-    return await this.sellService.accept(
-      req.headers['id'],
-      params.acceptId,
-    );
+    return await this.sellService.accept(id, params.acceptId);
   }
 
   @Put(':id')
