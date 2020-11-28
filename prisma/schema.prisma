@@ -1,0 +1,81 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model donation {
+  approved    Boolean   @default(false)
+  number      String    @id
+  title       String
+  description String
+  quantity    Int
+  created_at  DateTime  @default(now())
+  id_donor    String?
+  cnpj_ong    String?
+  ong         ong?      @relation(fields: [cnpj_ong], references: [cnpj])
+  donor       donor?    @relation(fields: [id_donor], references: [id])
+  product     product[]
+}
+
+model donor {
+  id         String     @id
+  active     Boolean    @default(false)
+  picture    String
+  hashdelete String
+  city       String
+  state      String
+  email      String
+  password   String
+  phone      String
+  donation   donation[]
+  pf         pf[]
+  pj         pj[]
+}
+
+model ong {
+  cnpj         String     @id
+  is_active    Boolean    @default(false)
+  picture      String
+  hashdelete   String
+  address      String
+  name         String
+  email        String
+  password     String
+  number       String
+  complement   String
+  neighborhood String
+  city         String
+  state        String
+  zip          String
+  phone        String
+  donation     donation[]
+}
+
+model pf {
+  cpf      String  @id
+  name     String
+  surname  String
+  gender   String
+  birthday String
+  id_donor String?
+  donor    donor?  @relation(fields: [id_donor], references: [id])
+}
+
+model pj {
+  cnpj     String  @id
+  name     String
+  id_donor String?
+  donor    donor?  @relation(fields: [id_donor], references: [id])
+}
+
+model product {
+  id              String    @id
+  description     String
+  quantity        Int
+  number_donation String?
+  donation        donation? @relation(fields: [number_donation], references: [number])
+}
