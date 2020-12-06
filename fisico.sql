@@ -1,5 +1,5 @@
 CREATE TABLE "public"."ong" (
-	cnpj CHAR(18) NOT NULL PRIMARY KEY,
+	cnpj CHAR(14) NOT NULL PRIMARY KEY,
 	is_active BOOLEAN NOT NULL DEFAULT false,
 	picture VARCHAR(255) NOT NULL,
 	hashDelete VARCHAR(255) NOT NULL,
@@ -29,7 +29,7 @@ CREATE TABLE "public"."donor" (
 )
 
 CREATE TABLE "public"."pf" (
-	cpf CHAR(14) NOT NULL PRIMARY KEY,
+	cpf CHAR(11) NOT NULL PRIMARY KEY,
 	name VARCHAR(50) NOT NULL,
 	surname VARCHAR(50) NOT NULL,
 	gender VARCHAR(10) NOT NULL,
@@ -38,7 +38,7 @@ CREATE TABLE "public"."pf" (
 )
 
 CREATE TABLE "public"."pj" (
-	cnpj CHAR(18) NOT NULL PRIMARY KEY,
+	cnpj CHAR(14) NOT NULL PRIMARY KEY,
 	name VARCHAR(50) NOT NULL,
 	id_donor VARCHAR(255) REFERENCES "public"."donor" (id)
 )
@@ -51,7 +51,7 @@ CREATE TABLE "public"."donation" (
 	quantity INTEGER NOT NULL,
 	created_at TIMESTAMP NOT NULL DEFAULT now(),
 	id_donor VARCHAR(255) REFERENCES "public"."donor" (id),
-	cnpj_ong CHAR(18) REFERENCES "public"."ong" (cnpj)
+	cnpj_ong CHAR(14) REFERENCES "public"."ong" (cnpj)
 )
 
 CREATE TABLE "public"."product" (

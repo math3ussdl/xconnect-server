@@ -36,13 +36,12 @@ routes.put('/sessions/ong/active', ProfileController.activeONG)
 routes.delete('/sessions/ong', ProfileController.removeONG)
 
 routes.get('/donation/all', verifyJWT, DonationController.listAll)
+routes.get('/donation/me', verifyJWT, DonationController.findMyDonations)
 routes.get('/donation/approved', verifyJWT, DonationController.listAllApproved)
 routes.get('/donation/:number', verifyJWT, DonationController.findIn)
 routes.post('/donation/new', verifyJWT, DonationController.store)
 routes.put('/donation/:number', verifyJWT, DonationController.update)
 routes.delete('/donation/:number', verifyJWT, DonationController.remove)
-
-routes.post('/donation/me', verifyJWT, DonationController.findMe)
 
 routes.put('/donation/:number/accept', DonationController.accept)
 routes.delete('/donation/:number/sent', verifyJWT, DonationController.sented)

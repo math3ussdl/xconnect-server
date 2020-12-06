@@ -2,9 +2,10 @@ import { prisma } from '../../config/prisma'
 import { v4 as uuidV4 } from 'uuid'
 
 import jwtdecode from 'jwt-decode'
+import { Request, Response } from 'express'
 
 export default new (class DonationController {
-  async listAll(_request: any, response: any) {
+  async listAll(_request: Request, response: Response) {
     const allDonations = await prisma.donation.findMany({
       where: {
         approved: false,
@@ -24,7 +25,7 @@ export default new (class DonationController {
     return response.json(allDonations)
   }
 
-  async listAllApproved(_request: any, response: any) {
+  async listAllApproved(_request: Request, response: Response) {
     const allDonations = await prisma.donation.findMany({
       where: {
         approved: true,
@@ -44,10 +45,10 @@ export default new (class DonationController {
     return response.json(allDonations)
   }
 
-  async findIn(request: any, response: any) {
+  async findIn(request: Request, response: Response) {
     const { number } = request.params
 
-    const targetDonation = await prisma.donation.findMany({
+    const targetDonation = await prisma.donation.findUnique({
       where: { number },
       include: {
         donor: true,
@@ -58,11 +59,11 @@ export default new (class DonationController {
     return response.json(targetDonation)
   }
 
-  async findMe(request: any, response: any) {
-    const token = request.headers['x-access-token']
-    const user: any = jwtdecode(token)
+  async findMyDonations(request: Request, response: Response) {
+    const token = request.headers['x-access-token'] as string
+    const user: any = await jwtdecode(token)
 
-    let targetDonor
+    var targetDonor
 
     if (user.cpf) {
       targetDonor = await prisma.pf.findUnique({
@@ -86,9 +87,10 @@ export default new (class DonationController {
 
     const meDonations = await prisma.donation.findMany({
       where: {
-        donor: targetDonor?.donor,
+        donor: targetDonor?.donor
       },
       include: {
+        donor: true,
         product: true,
       },
     })

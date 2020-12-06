@@ -66,7 +66,7 @@ export default new (class SessionController {
           surname,
           gender,
           birthday,
-          cpf,
+          cpf: cpf.replace(/\s+/g, ''),
           donor: {
             create: {
               id,
@@ -122,7 +122,7 @@ export default new (class SessionController {
       const newPj = await prisma.pj.create({
         data: {
           name,
-          cnpj,
+          cnpj: cnpj.replace(/\s+/g, ''),
           donor: {
             create: {
               id,
@@ -189,7 +189,7 @@ export default new (class SessionController {
       const newONG = await prisma.ong.create({
         data: {
           name,
-          cnpj,
+          cnpj: cnpj.replace(/\s+/g, ''),
           is_active: false,
           picture: "",
           hashdelete: "",
