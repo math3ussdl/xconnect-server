@@ -66,7 +66,7 @@ export default new (class SessionController {
           surname,
           gender,
           birthday,
-          cpf: cpf.replace(/\s+/g, ''),
+          cpf,
           donor: {
             create: {
               id,
@@ -122,7 +122,7 @@ export default new (class SessionController {
       const newPj = await prisma.pj.create({
         data: {
           name,
-          cnpj: cnpj.replace(/\s+/g, ''),
+          cnpj,
           donor: {
             create: {
               id,
@@ -189,7 +189,7 @@ export default new (class SessionController {
       const newONG = await prisma.ong.create({
         data: {
           name,
-          cnpj: cnpj.replace(/\s+/g, ''),
+          cnpj,
           is_active: false,
           picture: "",
           hashdelete: "",
@@ -258,14 +258,14 @@ export default new (class SessionController {
       })
     }
 
-    await axios.delete(
-      `https://api.imgur.com/3/image/${targetPf.donor?.hashdelete}`,
-      {
-        headers: {
-          Authorization: `Client-ID ${process.env.IMGUR_CLIENT_ID}`,
-        },
-      }
-    )
+    // await axios.delete(
+    //   `https://api.imgur.com/3/image/${targetPf.donor?.hashdelete}`,
+    //   {
+    //     headers: {
+    //       Authorization: `Client-ID ${process.env.IMGUR_CLIENT_ID}`,
+    //     },
+    //   }
+    // )
 
     await prisma.donor.delete({
       where: {
@@ -300,14 +300,14 @@ export default new (class SessionController {
       })
     }
 
-    await axios.delete(
-      `https://api.imgur.com/3/image/${targetPj.donor?.hashdelete}`,
-      {
-        headers: {
-          Authorization: `Client-ID ${process.env.IMGUR_CLIENT_ID}`,
-        },
-      }
-    )
+    // await axios.delete(
+    //   `https://api.imgur.com/3/image/${targetPj.donor?.hashdelete}`,
+    //   {
+    //     headers: {
+    //       Authorization: `Client-ID ${process.env.IMGUR_CLIENT_ID}`,
+    //     },
+    //   }
+    // )
 
     await prisma.donor.delete({
       where: {
@@ -339,14 +339,14 @@ export default new (class SessionController {
       })
     }
 
-    await axios.delete(
-      `https://api.imgur.com/3/image/${targetONG.hashdelete}`,
-      {
-        headers: {
-          Authorization: `Client-ID ${process.env.IMGUR_CLIENT_ID}`,
-        },
-      }
-    )
+    // await axios.delete(
+    //   `https://api.imgur.com/3/image/${targetONG.hashdelete}`,
+    //   {
+    //     headers: {
+    //       Authorization: `Client-ID ${process.env.IMGUR_CLIENT_ID}`,
+    //     },
+    //   }
+    // )
 
     await prisma.ong.delete({
       where: {
