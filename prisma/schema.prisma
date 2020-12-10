@@ -22,25 +22,21 @@ model donation {
 }
 
 model donor {
-  id         String     @id
-  active     Boolean    @default(false)
-  picture    String
-  hashdelete String
-  city       String
-  state      String
-  email      String
-  password   String
-  phone      String
-  donation   donation[]
-  pf         pf[]
-  pj         pj[]
+  id       String     @id
+  active   Boolean    @default(false)
+  city     String
+  state    String
+  email    String
+  password String
+  phone    String
+  donation donation[]
+  pf       pf[]
+  pj       pj[]
 }
 
 model ong {
   cnpj         String     @id
   is_active    Boolean    @default(false)
-  picture      String
-  hashdelete   String
   address      String
   name         String
   email        String

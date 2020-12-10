@@ -71,8 +71,6 @@ export default new (class SessionController {
             create: {
               id,
               active: false,
-              picture: "",
-              hashdelete: "",
               email,
               password: hashPwd,
               phone,
@@ -127,8 +125,6 @@ export default new (class SessionController {
             create: {
               id,
               active: false,
-              picture: "",
-              hashdelete: "",
               email,
               password: hashPwd,
               phone,
@@ -191,8 +187,6 @@ export default new (class SessionController {
           name,
           cnpj,
           is_active: false,
-          picture: "",
-          hashdelete: "",
           password: hashPwd,
           email,
           phone,
@@ -258,15 +252,6 @@ export default new (class SessionController {
       })
     }
 
-    // await axios.delete(
-    //   `https://api.imgur.com/3/image/${targetPf.donor?.hashdelete}`,
-    //   {
-    //     headers: {
-    //       Authorization: `Client-ID ${process.env.IMGUR_CLIENT_ID}`,
-    //     },
-    //   }
-    // )
-
     await prisma.donor.delete({
       where: {
         id: targetPf.donor?.id,
@@ -300,15 +285,6 @@ export default new (class SessionController {
       })
     }
 
-    // await axios.delete(
-    //   `https://api.imgur.com/3/image/${targetPj.donor?.hashdelete}`,
-    //   {
-    //     headers: {
-    //       Authorization: `Client-ID ${process.env.IMGUR_CLIENT_ID}`,
-    //     },
-    //   }
-    // )
-
     await prisma.donor.delete({
       where: {
         id: targetPj.donor?.id,
@@ -338,15 +314,6 @@ export default new (class SessionController {
         err: 'ONG Not Found!',
       })
     }
-
-    // await axios.delete(
-    //   `https://api.imgur.com/3/image/${targetONG.hashdelete}`,
-    //   {
-    //     headers: {
-    //       Authorization: `Client-ID ${process.env.IMGUR_CLIENT_ID}`,
-    //     },
-    //   }
-    // )
 
     await prisma.ong.delete({
       where: {
